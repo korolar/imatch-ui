@@ -1,0 +1,29 @@
+<div class="container">
+  <header class="jumbotron">
+    <h2 class="text-center">Trainer Schedule status</h2>
+  </header>
+
+  <div class="custom" *ngFor="let trainer of content.trainerList">
+    <h2>{{trainer.firstName}}</h2>
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>Where</th>
+      <th>Start</th>
+      <th>End</th>
+      <th>Value</th>
+      <th>Played</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr class="custom" *ngFor="let schedule of trainer.scheduleList | filter : 'played' : false">
+      <td>{{schedule.club}}</td>
+      <td>{{schedule.beginning}}</td>
+      <td>{{schedule.end}}</td>
+      <td>{{schedule.value}}</td>
+      <td>{{schedule.played}}</td>
+    </tr>
+    </tbody>
+  </table>
+  </div>
+</div>
