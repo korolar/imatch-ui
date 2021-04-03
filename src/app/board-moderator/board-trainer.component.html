@@ -15,7 +15,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr class="custom" *ngFor="let schedule of content.scheduleList | filter : 'played' : played">
+      <tr class="custom" *ngFor="let schedule of content | filter : 'played' : played">
         <td>{{schedule.club}}</td>
         <td>{{schedule.beginning}}</td>
         <td>{{schedule.end}}</td>

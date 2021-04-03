@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../_services/user.service';
-import {TokenStorageService} from "../_services/token-storage.service";
+import {TokenStorageService} from '../_services/token-storage.service';
+import { AppRoutingModule } from '../app-routing.module';
+import { Routes, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-board-trainer',
@@ -9,13 +11,14 @@ import {TokenStorageService} from "../_services/token-storage.service";
 })
 export class BoardTrainerComponent implements OnInit {
   content: any;
-  playedList: boolean[] = [false,true];
+  playedList: boolean[] = [false, true];
 
   constructor(private userService: UserService,  private tokenStorage: TokenStorageService) {
   }
 
   ngOnInit(): void {
-    this.userService.getTrainerBoard(this.tokenStorage.getUser().id).subscribe(
+    const user = this.tokenStorage.getUser();
+    this.userService.getTrainerBoard(user.id).subscribe(
       data => {
         this.content = JSON.parse(data);
       },
@@ -25,11 +28,11 @@ export class BoardTrainerComponent implements OnInit {
     );
   }
 
-  playedOrNot(played:boolean): string{
-    if(played){
-      return "Finished";
+  playedOrNot(played: boolean): string{
+    if (played){
+      return 'Finished1';
     } else {
-      return "Played";
+      return 'Played';
     }
   }
 }

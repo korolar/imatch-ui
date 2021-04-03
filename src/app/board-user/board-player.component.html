@@ -3,47 +3,32 @@
     <h2 class="text-center">Schedule status</h2>
   </header>
 
-  <h3 class="text-center">Scheduled</h3>
-  <table class="table table-striped">
-    <thead>
-    <tr>
-      <th>Where</th>
-      <th>Start</th>
-      <th>End</th>
-      <th>Value</th>
-      <th>Played</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr class="custom" *ngFor="let schedule of content.scheduleList | filter : 'played' : false">
-      <td>{{schedule.club}}</td>
-      <td>{{schedule.beginning}}</td>
-      <td>{{schedule.end}}</td>
-      <td>{{schedule.value}}</td>
-      <td>{{schedule.played}}</td>
-    </tr>
-    </tbody>
-  </table>
+  <app-mwl-demo-utils-calendar-header [(view)]="view" [(viewDate)]="viewDate">
+  </app-mwl-demo-utils-calendar-header>
 
-  <h3 class="text-center">Played</h3>
-  <table class="table table-striped">
-    <thead>
-    <tr>
-      <th>Where</th>
-      <th>Start</th>
-      <th>End</th>
-      <th>Value</th>
-      <th>Played</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr class="custom" *ngFor="let schedule of content.scheduleList | filter : 'played' : true">
-      <td>{{schedule.club}}</td>
-      <td>{{schedule.beginning}}</td>
-      <td>{{schedule.end}}</td>
-      <td>{{schedule.value}}</td>
-      <td>{{schedule.played}}</td>
-    </tr>
-    </tbody>
-  </table>
+  <div [ngSwitch]="view">
+    <mwl-calendar-month-view
+            *ngSwitchCase="'month'"
+            [viewDate]="viewDate"
+            [events]="events"
+    >
+    </mwl-calendar-month-view>
+    <mwl-calendar-week-view
+            *ngSwitchCase="'week'"
+            [viewDate]="viewDate"
+            [events]="events"
+            [dayStartHour]=7
+            [dayEndHour]=19
+    >
+    </mwl-calendar-week-view>
+    <mwl-calendar-day-view
+            *ngSwitchCase="'day'"
+            [viewDate]="viewDate"
+            [events]="events"
+            [dayStartHour]=7
+            [dayEndHour]=19
+    >
+    </mwl-calendar-day-view>
+  </div>
 </div>
+

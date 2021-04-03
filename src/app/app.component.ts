@@ -9,7 +9,7 @@ import { TokenStorageService } from './_services/token-storage.service';
 export class AppComponent implements OnInit {
   private roles: string[] = [];
   isLoggedIn = false;
-  title = "IMatch";
+  title = 'IMatch';
   showOwnerBoard = false;
   showTrainerBoard = false;
   showScheduleBoard = false;
@@ -30,8 +30,8 @@ export class AppComponent implements OnInit {
 
       this.username = user.username;
     }
-    //todo: route all non-loged in user to HomePage
-    //todo: route unsuported views to certain roles to ErrorPage -> need  to create ErrorPage
+    // todo: route all non-loged in user to HomePage
+    // todo: route unsuported views to certain roles to ErrorPage -> need  to create ErrorPage
   }
 
   logout(): void {
