@@ -3,6 +3,9 @@ import { UserService } from '../_services/user.service';
 import {TokenStorageService} from '../_services/token-storage.service';
 import { AppRoutingModule } from '../app-routing.module';
 import { Routes, RouterModule } from '@angular/router';
+import {User} from '../calendar/day-view-scheduler.component';
+import {parseISO} from 'date-fns';
+import {CalendarEvent, CalendarView} from 'angular-calendar';
 
 @Component({
   selector: 'app-board-trainer',
@@ -11,7 +14,9 @@ import { Routes, RouterModule } from '@angular/router';
 })
 export class BoardTrainerComponent implements OnInit {
   content: any;
-  playedList: boolean[] = [false, true];
+  view: CalendarView = CalendarView.Day;
+  viewDate: Date = new Date();
+  events: CalendarEvent[] = [];
 
   constructor(private userService: UserService,  private tokenStorage: TokenStorageService) {
   }
@@ -21,6 +26,7 @@ export class BoardTrainerComponent implements OnInit {
     this.userService.getTrainerBoard(user.id).subscribe(
       data => {
         this.content = JSON.parse(data);
+        this.mapFromSchedulesToEvents(this.content);
       },
       err => {
         this.content = JSON.parse(err.error).message;
@@ -28,11 +34,26 @@ export class BoardTrainerComponent implements OnInit {
     );
   }
 
-  playedOrNot(played: boolean): string{
-    if (played){
-      return 'Finished1';
-    } else {
-      return 'Played';
-    }
+  public mapFromSchedulesToEvents(schedule: any[]): void {
+    schedule.forEach(value => this.mapFromScheduleToEvent(value));
+  }
+
+  private mapFromScheduleToEvent(schedule: any): void {
+    this.events.push({
+      title: '@' + schedule.club + ' value ' + schedule.value + 'kn' + ' ' + this.getAllPlayersAsString(schedule.players),
+      start: parseISO(schedule.beginning),
+      end: parseISO(schedule.end),
+    });
+  }
+
+  private getAllPlayersAsString(players: any[]): string {
+
+    // tslint:disable-next-line:prefer-const
+    let playerString = '';
+    players.forEach(player => {
+          playerString = playerString + player.firstName + ' ' + player.lastName + ' ';
+        }
+    );
+    return playerString;
   }
 }

@@ -5,13 +5,14 @@ import {CalendarEvent, CalendarEventTimesChangedEvent, CalendarView} from 'angul
 import {parseISO, format, addHours, startOfDay} from 'date-fns';
 import {User} from '../calendar/day-view-scheduler.component';
 import {colors, colorsList} from '../calendar/colors';
+import {Subject} from "rxjs";
 
 
 @Component({
     selector: 'app-board-owner',
     templateUrl: './board-owner.component.html',
     styleUrls: ['./board-owner.component.css'],
-    // changeDetection: ChangeDetectionStrategy.Default,
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BoardOwnerComponent implements OnInit {
     content: any;
@@ -22,12 +23,22 @@ export class BoardOwnerComponent implements OnInit {
     constructor(private userService: UserService, private tokenStorage: TokenStorageService, private changeDetectorRef: ChangeDetectorRef) {
     }
 
+    refresh: Subject<any> = new Subject();
+
+    addEvent(date: any): void {
+        this.events.push({
+            start: date.item,
+            title: 'New event',
+            color: colors.red,
+        });
+        this.refresh.next();
+    }
+
     ngOnInit(): void {
         this.userService.getOwnerBoard(this.tokenStorage.getUser().id).subscribe(
             data => {
                 this.content = JSON.parse(data);
                 this.addTrainerToUsers(this.content);
-                // this.changeDetectorRef.markForCheck();
             },
             err => {
                 this.content = JSON.parse(err.error).message;
@@ -35,7 +46,7 @@ export class BoardOwnerComponent implements OnInit {
         );
     }
 
-    private mapFromSchedulesToEvents(schedule: any[], user: User): void {
+    public mapFromSchedulesToEvents(schedule: any[], user: User): void {
         schedule.forEach(value => this.mapFromScheduleToEvent(value, user));
     }
 

@@ -15,6 +15,7 @@ import {BoardPlayerComponent} from './board-user/board-player.component';
 import {CalendarModule, DateAdapter} from 'angular-calendar';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { DayViewSchedulerComponent } from './calendar/day-view-scheduler.component';
+import { ContextMenuModule } from 'ngx-contextmenu';
 
 import {adapterFactory} from 'angular-calendar/date-adapters/date-fns';
 import {authInterceptorProviders} from './_helpers/auth.interceptor';
@@ -45,6 +46,9 @@ import { CalendarHeaderComponent } from './calendar/calendar-header.components';
         CalendarModule.forRoot({
             provide: DateAdapter,
             useFactory: adapterFactory,
+        }),
+        ContextMenuModule.forRoot({
+            useBootstrap4: true,
         }),
     ],
     providers: [authInterceptorProviders],
