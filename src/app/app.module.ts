@@ -1,6 +1,6 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 
 import {AppRoutingModule} from './app-routing.module';
@@ -14,13 +14,16 @@ import {BoardTrainerComponent} from './board-moderator/board-trainer.component';
 import {BoardPlayerComponent} from './board-user/board-player.component';
 import {CalendarModule, DateAdapter} from 'angular-calendar';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import { DayViewSchedulerComponent } from './calendar/day-view-scheduler.component';
-import { ContextMenuModule } from 'ngx-contextmenu';
+import {DayViewSchedulerComponent} from './calendar/day-view-scheduler.component';
+import {ContextMenuModule} from 'ngx-contextmenu';
+import {OwlDateTimeModule, OwlNativeDateTimeModule} from '@danielmoncada/angular-datetime-picker';
+import {NgSelectModule} from '@ng-select/ng-select';
 
 import {adapterFactory} from 'angular-calendar/date-adapters/date-fns';
 import {authInterceptorProviders} from './_helpers/auth.interceptor';
 import {FilterPipe} from './pipes/filter.pipe';
-import { CalendarHeaderComponent } from './calendar/calendar-header.components';
+import {CalendarHeaderComponent} from './calendar/calendar-header.components';
+import {AddscheduleComponent} from './addschedule/addschedule.component';
 
 @NgModule({
     declarations: [
@@ -34,7 +37,8 @@ import { CalendarHeaderComponent } from './calendar/calendar-header.components';
         BoardPlayerComponent,
         FilterPipe,
         CalendarHeaderComponent,
-        DayViewSchedulerComponent
+        DayViewSchedulerComponent,
+        AddscheduleComponent,
     ],
     exports: [CalendarHeaderComponent],
     imports: [
@@ -50,6 +54,10 @@ import { CalendarHeaderComponent } from './calendar/calendar-header.components';
         ContextMenuModule.forRoot({
             useBootstrap4: true,
         }),
+        ReactiveFormsModule,
+        OwlDateTimeModule,
+        OwlNativeDateTimeModule,
+        NgSelectModule
     ],
     providers: [authInterceptorProviders],
     bootstrap: [AppComponent]

@@ -1,11 +1,10 @@
-import {ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation, ChangeDetectorRef} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {UserService} from '../_services/user.service';
 import {TokenStorageService} from '../_services/token-storage.service';
 import {CalendarEvent, CalendarEventTimesChangedEvent, CalendarView} from 'angular-calendar';
-import {parseISO, format, addHours, startOfDay} from 'date-fns';
+import {parseISO} from 'date-fns';
 import {User} from '../calendar/day-view-scheduler.component';
-import {colors, colorsList} from '../calendar/colors';
-import {Subject} from "rxjs";
+import {colorsList} from '../calendar/colors';
 
 
 @Component({
@@ -20,18 +19,8 @@ export class BoardOwnerComponent implements OnInit {
     viewDate: Date = new Date();
     users: User[] = [];
     events: CalendarEvent[] = [];
-    constructor(private userService: UserService, private tokenStorage: TokenStorageService, private changeDetectorRef: ChangeDetectorRef) {
-    }
 
-    refresh: Subject<any> = new Subject();
-
-    addEvent(date: any): void {
-        this.events.push({
-            start: date.item,
-            title: 'New event',
-            color: colors.red,
-        });
-        this.refresh.next();
+    constructor(private userService: UserService, private tokenStorage: TokenStorageService, private cd: ChangeDetectorRef) {
     }
 
     ngOnInit(): void {
@@ -39,6 +28,7 @@ export class BoardOwnerComponent implements OnInit {
             data => {
                 this.content = JSON.parse(data);
                 this.addTrainerToUsers(this.content);
+                this.cd.markForCheck();
             },
             err => {
                 this.content = JSON.parse(err.error).message;
@@ -51,15 +41,15 @@ export class BoardOwnerComponent implements OnInit {
     }
 
     private mapFromScheduleToEvent(schedule: any, user2: User): void {
-        this.events.push({
-            title: '@' + schedule.club + ' value ' + schedule.value + 'kn' + ' ' + this.getAllPlayersAsString(schedule.players),
+        this.events = [...this.events, {
+            title: '@' + schedule.location.name + ' value ' + schedule.value + 'kn' + ' ' + this.getAllPlayersAsString(schedule.players),
             start: parseISO(schedule.beginning),
             end: parseISO(schedule.end),
             color: user2.color,
             meta: {
                 user: user2,
             },
-        });
+        }];
     }
 
     private getAllPlayersAsString(players: any[]): string {
@@ -81,7 +71,7 @@ export class BoardOwnerComponent implements OnInit {
                 name: trainer[i].firstName + ' ' + trainer[i].lastName,
                 color: colorsList[i],
             };
-            this.users.push(user);
+            this.users = [...this.users, user];
             this.mapFromSchedulesToEvents(trainer[i].scheduleList, user);
         }
     }

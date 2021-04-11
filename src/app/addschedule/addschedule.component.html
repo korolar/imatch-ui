@@ -1,0 +1,123 @@
+<div class="container">
+    <header class="jumbotron">
+        <h2 class="text-center">Add Schedule</h2>
+    </header>
+    <button class="mb-5 font-weight-bold text-uppercase w-25 p-3 btn btn-success mar" (click)="onAdd()">Create selected</button>
+    
+
+
+
+
+
+    <div class="table-responsive" style="height:805px;">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Players</th>
+                <th>Trainer</th>
+                <th>Location</th>
+                <th>Starts at</th>
+                <th>Ends at</th>
+                <th>Value</th>
+                <th>Remove</th>
+            </tr>
+            </thead>
+
+            <tbody>
+
+            <tr [formGroup]="addForm">
+                <td>
+                    <ng-select
+                            id="players"
+                            #MyNgSelect
+                            bindLabel="firstName"
+                            placeholder="Select item"
+                            [(ngModel)]="selectedPlayers"
+                            formControlName="players"
+                            [required]="true"
+                            [multiple]="true"
+                    >
+                        <ng-option [value]="item" *ngFor="let item of players">
+                            {{item.firstName}}
+                        </ng-option>
+                    </ng-select>
+                </td>
+                <td>
+                    <ng-select
+                            id="trainer"
+                            #MyNgSelect
+                            bindLabel="firstName"
+                            placeholder="Select item"
+                            [(ngModel)]="selectedTrainer"
+                            formControlName="trainer"
+                            [required]="true"
+                    >
+                        <ng-option [value]="item" *ngFor="let item of trainers">
+                            {{item.firstName}}
+                        </ng-option>
+                    </ng-select>
+                </td>
+                <td>
+                    <ng-select
+                            id="location"
+                            #MyNgSelect
+                            bindLabel="name"
+                            placeholder="Select item"
+                            [(ngModel)]="selectedLocation"
+                            formControlName="location"
+                            [required]="true"
+                    >
+                        <ng-option [value]="item" *ngFor="let item of locations">
+                            {{item.name}}
+                        </ng-option>
+                    </ng-select>
+                </td>
+                <td>
+                    <input [owlDateTimeTrigger]="dt1" [owlDateTime]="dt1" [required]="true" formControlName="beginning" placeholder="Beginning"
+                           class="form-control"
+                           id="beginning">
+                    <owl-date-time #dt1></owl-date-time>
+                </td>
+                <td>
+                    <input [owlDateTimeTrigger]="dt2" [owlDateTime]="dt2" [required]="true" formControlName="end" placeholder="End" class="form-control"
+                           id="end">
+                    <owl-date-time #dt2></owl-date-time>
+                </td>
+                <td>
+                    <input formControlName="value" placeholder="Value" [required]="true" name="value" class="form-control" id="value">
+                </td>
+                <td>
+                    <button class="btn btn-success" (click)="addForm.valid && onSubmit()">Add</button>
+                </td>
+            </tr>
+            <tr *ngFor="let schedule of schedulesToAdd">
+                <td>
+                    <div *ngFor="let player of schedule.players">
+                        {{player.firstName}} {{player.lastName}}
+                    </div>
+                </td>
+                <td>
+                    {{schedule.trainer.firstName}} {{schedule.trainer.lastName}}
+                </td>
+                <td>
+                    {{schedule.location.name}}
+                </td>
+                <td>
+                    {{schedule.beginning}}
+                </td>
+                <td>
+                    {{schedule.end}}
+                </td>
+                <td>
+                    {{schedule.value}}
+                </td>
+                <td>
+                    <button class="btn btn-danger" (click)="onDelete(schedule)">
+                        Delete
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

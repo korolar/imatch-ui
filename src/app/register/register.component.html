@@ -15,14 +15,14 @@
       <div class="form-group">
         <label for="username">Username</label>
         <input
-          type="text"
-          class="form-control"
-          name="username"
-          [(ngModel)]="form.username"
-          required
-          minlength="3"
-          maxlength="20"
-          #username="ngModel"
+                type="text"
+                class="form-control"
+                name="username"
+                [(ngModel)]="form.username"
+                required
+                minlength="3"
+                maxlength="20"
+                #username="ngModel"
         />
         <div class="alert-danger" *ngIf="username.errors && f.submitted">
           <div *ngIf="username.errors.required">Username is required</div>

@@ -8,6 +8,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { BoardPlayerComponent } from './board-user/board-player.component';
 import { BoardTrainerComponent } from './board-moderator/board-trainer.component';
 import { BoardOwnerComponent } from './board-admin/board-owner.component';
+import { AddscheduleComponent } from './addschedule/addschedule.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -17,6 +18,7 @@ const routes: Routes = [
   { path: 'user', component: BoardPlayerComponent },
   { path: 'mod', component: BoardTrainerComponent },
   { path: 'admin', component: BoardOwnerComponent },
+  { path: 'addschedule', component: AddscheduleComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full' }
 ];
 
