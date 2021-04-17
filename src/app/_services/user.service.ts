@@ -35,6 +35,10 @@ export class UserService {
     return this.http.get(API_URL + 'owner/' + id + '/players', { responseType: 'text' });
   }
 
+  getPlayersStatusForOwner(id: number): Observable<any> {
+    return this.http.get(API_URL + 'owner/' + id + '/players/status', { responseType: 'text' });
+  }
+
   getTrainersForOwner(id: number): Observable<any> {
     return this.http.get(API_URL + 'owner/' + id + '/trainers', { responseType: 'text' });
   }
@@ -45,5 +49,9 @@ export class UserService {
 
   createSchedule(schedule: any): Observable<any> {
     return this.http.post<any>(API_URL + 'owner/schedule' , schedule);
+  }
+
+  addPackage(apackage: any): Observable<any> {
+    return this.http.post<any>(API_URL + 'owner/package' , apackage);
   }
 }

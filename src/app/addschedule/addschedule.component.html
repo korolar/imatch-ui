@@ -2,14 +2,95 @@
     <header class="jumbotron">
         <h2 class="text-center">Add Schedule</h2>
     </header>
-    <button class="mb-5 font-weight-bold text-uppercase w-25 p-3 btn btn-success mar" (click)="onAdd()">Create selected</button>
-    
+    <form [formGroup]="addForm" (ngSubmit)="onSubmit()" novalidate>
+        <div class="form-group">
+            <ng-select
+                    id="players"
+                    bindLabel="firstName"
+                    placeholder="Select players"
+                    formControlName="players"
+                    [multiple]="true"
+            >
+                <ng-option [value]="item" *ngFor="let item of players">
+                    {{item.firstName}}
+                </ng-option>
+            </ng-select>
+            <div *ngIf="getControl.players.touched && getControl.players.invalid" class="text-danger">
+                <div *ngIf="getControl.players.errors.required">At least one player is required.</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <ng-select
+                    id="trainer"
+                    bindLabel="firstName"
+                    placeholder="Select trainer"
+                    formControlName="trainer"
+            >
+                <ng-option [value]="item" *ngFor="let item of trainers">
+                    {{item.firstName}}
+                </ng-option>
+            </ng-select>
+            <div *ngIf="getControl.trainer.touched && getControl.trainer.invalid" class="text-danger">
+                <div *ngIf="getControl.trainer.errors.required">Trainer is required.</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <ng-select
+                    id="location1"
+                    bindLabel="name"
+                    placeholder="Select locations"
+                    formControlName="location"
+            >
+                <ng-option [value]="item" *ngFor="let item of locations">
+                    {{item.name}}
+                </ng-option>
+            </ng-select>
+            <div *ngIf="getControl.location.touched && getControl.location.invalid" class="text-danger">
+                <div *ngIf="getControl.location.errors.required">Location is required.</div>
+            </div>
+        </div>
+        <div class="row form-group">
+            <div class="col">
+                <input
+                        [owlDateTimeTrigger]="dt1"
+                        [owlDateTime]="dt1"
+                        formControlName="beginning"
+                        placeholder="Beginning"
+                        class="form-control"
+                        (ngModelChange)="onChange($event)"
+                        id="beginning">
+                <owl-date-time #dt1></owl-date-time>
+                <div *ngIf="getControl.beginning.touched && getControl.beginning.invalid" class="text-danger">
+                    <div *ngIf="getControl.beginning.errors.required">Beginning time is required.</div>
+                </div>
+            </div>
+            <div class="col">
+                <input
+                        [owlDateTimeTrigger]="dt2"
+                        [owlDateTime]="dt2"
+                        formControlName="end"
+                        placeholder="End"
+                        class="form-control"
+                        id="end">
+                <owl-date-time #dt2></owl-date-time>
+                <div *ngIf="getControl.end.touched && getControl.end.invalid" class="text-danger">
+                    <div *ngIf="getControl.end.errors.required">End time is required.</div>
+                </div>
+            </div>
+
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" formControlName="value" placeholder="Value">
+            <div *ngIf="getControl.value.touched && getControl.value.invalid" class="text-danger">
+                <div *ngIf="getControl.value.errors.required">Value is required.</div>
+            </div>
+        </div>
+        <button class="btn btn-danger btn-block" type="submit">Submit</button>
+    </form>
 
 
-
-
-
-    <div class="table-responsive" style="height:805px;">
+    <div class="mt-5 table-responsive" *ngIf="schedulesToAdd.length > 0">
         <table class="table table-bordered">
             <thead>
             <tr>
@@ -24,72 +105,6 @@
             </thead>
 
             <tbody>
-
-            <tr [formGroup]="addForm">
-                <td>
-                    <ng-select
-                            id="players"
-                            #MyNgSelect
-                            bindLabel="firstName"
-                            placeholder="Select item"
-                            [(ngModel)]="selectedPlayers"
-                            formControlName="players"
-                            [required]="true"
-                            [multiple]="true"
-                    >
-                        <ng-option [value]="item" *ngFor="let item of players">
-                            {{item.firstName}}
-                        </ng-option>
-                    </ng-select>
-                </td>
-                <td>
-                    <ng-select
-                            id="trainer"
-                            #MyNgSelect
-                            bindLabel="firstName"
-                            placeholder="Select item"
-                            [(ngModel)]="selectedTrainer"
-                            formControlName="trainer"
-                            [required]="true"
-                    >
-                        <ng-option [value]="item" *ngFor="let item of trainers">
-                            {{item.firstName}}
-                        </ng-option>
-                    </ng-select>
-                </td>
-                <td>
-                    <ng-select
-                            id="location"
-                            #MyNgSelect
-                            bindLabel="name"
-                            placeholder="Select item"
-                            [(ngModel)]="selectedLocation"
-                            formControlName="location"
-                            [required]="true"
-                    >
-                        <ng-option [value]="item" *ngFor="let item of locations">
-                            {{item.name}}
-                        </ng-option>
-                    </ng-select>
-                </td>
-                <td>
-                    <input [owlDateTimeTrigger]="dt1" [owlDateTime]="dt1" [required]="true" formControlName="beginning" placeholder="Beginning"
-                           class="form-control"
-                           id="beginning">
-                    <owl-date-time #dt1></owl-date-time>
-                </td>
-                <td>
-                    <input [owlDateTimeTrigger]="dt2" [owlDateTime]="dt2" [required]="true" formControlName="end" placeholder="End" class="form-control"
-                           id="end">
-                    <owl-date-time #dt2></owl-date-time>
-                </td>
-                <td>
-                    <input formControlName="value" placeholder="Value" [required]="true" name="value" class="form-control" id="value">
-                </td>
-                <td>
-                    <button class="btn btn-success" (click)="addForm.valid && onSubmit()">Add</button>
-                </td>
-            </tr>
             <tr *ngFor="let schedule of schedulesToAdd">
                 <td>
                     <div *ngFor="let player of schedule.players">
@@ -119,5 +134,6 @@
             </tr>
             </tbody>
         </table>
+        <button class="mb-5 font-weight-bold text-uppercase w-25 p-3 btn btn-success mar" (click)="onAdd()">Create selected</button>
     </div>
 </div>

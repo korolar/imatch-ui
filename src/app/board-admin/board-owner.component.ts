@@ -52,6 +52,12 @@ export class BoardOwnerComponent implements OnInit {
         }];
     }
 
+    add2Hour(date: Date): Date {
+        date.setHours(date.getHours() + 2);
+        console.log(date);
+        return date;
+    }
+
     private getAllPlayersAsString(players: any[]): string {
 
         // tslint:disable-next-line:prefer-const

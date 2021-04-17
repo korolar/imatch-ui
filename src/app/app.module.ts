@@ -24,6 +24,10 @@ import {authInterceptorProviders} from './_helpers/auth.interceptor';
 import {FilterPipe} from './pipes/filter.pipe';
 import {CalendarHeaderComponent} from './calendar/calendar-header.components';
 import {AddscheduleComponent} from './addschedule/addschedule.component';
+import { AddpackageComponent } from './addpackage/addpackage.component';
+import {DatePipe} from '@angular/common';
+import { InfoplayersComponent } from './infoplayers/infoplayers.component';
+import {MatTableModule } from '@angular/material/table';
 
 @NgModule({
     declarations: [
@@ -39,6 +43,8 @@ import {AddscheduleComponent} from './addschedule/addschedule.component';
         CalendarHeaderComponent,
         DayViewSchedulerComponent,
         AddscheduleComponent,
+        AddpackageComponent,
+        InfoplayersComponent,
     ],
     exports: [CalendarHeaderComponent],
     imports: [
@@ -57,9 +63,10 @@ import {AddscheduleComponent} from './addschedule/addschedule.component';
         ReactiveFormsModule,
         OwlDateTimeModule,
         OwlNativeDateTimeModule,
-        NgSelectModule
+        NgSelectModule,
+        MatTableModule,
     ],
-    providers: [authInterceptorProviders],
+    providers: [authInterceptorProviders, DatePipe],
     bootstrap: [AppComponent]
 })
 export class AppModule {

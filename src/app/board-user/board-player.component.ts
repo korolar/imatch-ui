@@ -23,7 +23,7 @@ export class BoardPlayerComponent implements OnInit {
         this.userService.getPlayerBoard(this.tokenStorage.getUser().id).subscribe(
             data => {
                 this.content = JSON.parse(data);
-                this.mapFromSchedulesToEvents(this.content);
+                this.mapFromSchedulesToEvents(this.content.scheduleList);
                 this.cd.markForCheck();
             },
             err => {
