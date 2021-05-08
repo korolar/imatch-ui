@@ -24,10 +24,11 @@ import {authInterceptorProviders} from './_helpers/auth.interceptor';
 import {FilterPipe} from './pipes/filter.pipe';
 import {CalendarHeaderComponent} from './calendar/calendar-header.components';
 import {AddscheduleComponent} from './addschedule/addschedule.component';
-import { AddpackageComponent } from './addpackage/addpackage.component';
+import {AddpackageComponent} from './addpackage/addpackage.component';
 import {DatePipe} from '@angular/common';
-import { InfoplayersComponent } from './infoplayers/infoplayers.component';
-import {MatTableModule } from '@angular/material/table';
+import {PlayerStatusComponent} from './board-user/player-status.component';
+import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
+import {PlayersModule} from './players/players.module';
 
 @NgModule({
     declarations: [
@@ -44,9 +45,10 @@ import {MatTableModule } from '@angular/material/table';
         DayViewSchedulerComponent,
         AddscheduleComponent,
         AddpackageComponent,
-        InfoplayersComponent,
+        PlayerStatusComponent,
+        PageNotFoundComponent,
     ],
-    exports: [CalendarHeaderComponent],
+    exports: [CalendarHeaderComponent, PlayerStatusComponent, DayViewSchedulerComponent],
     imports: [
         BrowserModule,
         AppRoutingModule,
@@ -64,7 +66,7 @@ import {MatTableModule } from '@angular/material/table';
         OwlDateTimeModule,
         OwlNativeDateTimeModule,
         NgSelectModule,
-        MatTableModule,
+        PlayersModule
     ],
     providers: [authInterceptorProviders, DatePipe],
     bootstrap: [AppComponent]

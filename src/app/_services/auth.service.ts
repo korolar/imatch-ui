@@ -3,7 +3,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 
 const AUTH_API = 'http://localhost:8080/';
-// const AUTH_API = 'http://testimatch-env.eba-rpfae3g3.eu-central-1.elasticbeanstalk.com/';
+// const AUTH_API = 'http://devimatch-env.eba-yjx2kj8u.eu-central-1.elasticbeanstalk.com/';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})

@@ -12,7 +12,6 @@ import {parseISO} from 'date-fns';
 })
 export class BoardPlayerComponent implements OnInit {
     content: any;
-    view: CalendarView = CalendarView.Day;
     viewDate: Date = new Date();
     events: CalendarEvent[] = [];
 
