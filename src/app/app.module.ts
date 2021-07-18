@@ -1,7 +1,7 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {HttpClientModule} from '@angular/common/http';
+import {HttpClientModule, HttpClientXsrfModule} from '@angular/common/http';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -29,6 +29,7 @@ import {DatePipe} from '@angular/common';
 import {PlayerStatusComponent} from './board-user/player-status.component';
 import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
 import {PlayersModule} from './players/players.module';
+
 
 @NgModule({
     declarations: [
@@ -66,7 +67,8 @@ import {PlayersModule} from './players/players.module';
         OwlDateTimeModule,
         OwlNativeDateTimeModule,
         NgSelectModule,
-        PlayersModule
+        PlayersModule,
+        HttpClientXsrfModule.withOptions({cookieName: 'XSRF-TOKEN'})
     ],
     providers: [authInterceptorProviders, DatePipe],
     bootstrap: [AppComponent]
